@@ -1,0 +1,27 @@
+/reload
+/time set day
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/time set day
+/give Dev gleamcraft:glimmerstone
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/time set day
+/weather rain
+/weather clear
+/gamemode spectator
+/gamemode creative
+/gamemode spectator
+/gamemode creative
