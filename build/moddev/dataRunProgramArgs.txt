@@ -24,6 +24,6 @@ C:\\Users\\jeh12\\.gradle\\caches\\neoformruntime\\assets
 gleamcraft
 --all
 --output
-C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\gleamcraft-1.21.4\\src\\generated\\resources
+C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\Gleamcraft\\src\\generated\\resources
 --existing
-C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\gleamcraft-1.21.4\\src\\main\\resources
+C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\Gleamcraft\\src\\main\\resources
