@@ -302,6 +302,12 @@ public class Gleamcraft {
     // ITEMS
     // Glimmerstone crystal
     public static final DeferredItem<Item> GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("glimmerstone_crystal");
+    // Glowing Glimmerstone crystal
+    public static final DeferredItem<Item> GLOWING_GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("glowing_glimmerstone_crystal");
+    // Reactive Glimmerstone crystal
+    public static final DeferredItem<Item> REACTIVE_GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("reactive_glimmerstone_crystal");
+    // Reinforced Glimmerstone crystal
+    public static final DeferredItem<Item> REINFORCED_GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("reinforced_glimmerstone_crystal");
     // Glimmerstone tools
     public static final DeferredItem<SwordItem> GLIMMERSTONE_SWORD = ITEMS.registerItem(
             "glimmerstone_sword",
@@ -356,7 +362,10 @@ public class Gleamcraft {
             .icon(() -> GLIMMERSTONE_CRYSTAL.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(GLIMMERSTONE_CRYSTAL.get()); // Add the glimmerstone crystal to our tab
-                output.accept(GLIMMERSTONE.get()); // Add the glimmerstone to our tab
+                output.accept(GLOWING_GLIMMERSTONE_CRYSTAL.get()); // Add the glowing glimmerstone crystal to our tab
+                output.accept(REACTIVE_GLIMMERSTONE_CRYSTAL.get()); // Add the reactive glimmerstone crystal to our tab
+                output.accept(REINFORCED_GLIMMERSTONE_CRYSTAL.get()); // Add the reinforced glimmerstone crystal to our tab
+                output.accept(GLIMMERSTONE_ITEM.get()); // Add the glimmerstone to our tab
                 output.accept(GLIMMERSTONE_ORE_ITEM.get()); // Add the glimmerstone ore to our tab
                 output.accept(DEEPSLATE_GLIMMERSTONE_ORE_ITEM.get()); // Add the deepslate glimmerstone ore to our tab
                 output.accept(GLIMMERSTONE_CRYSTAL_BLOCK_ITEM.get()); // Add the glimmerstone crystal block to our tab

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "gleamcraft:glimmerstone_crystal",
+    "X": "minecraft:redstone"
+  },
+  "pattern": [
+    "X#",
+    "#X"
+  ],
+  "result": {
+    "count": 2,
+    "id": "gleamcraft:reactive_glimmerstone_crystal"
+  }
+}

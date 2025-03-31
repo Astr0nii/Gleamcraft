@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": "gleamcraft:glimmerstone_crystal",
+    "#": "minecraft:stick"
+  },
+  "pattern": [
+    "X",
+    "X",
+    "#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "gleamcraft:glimmerstone_sword"
+  }
+}

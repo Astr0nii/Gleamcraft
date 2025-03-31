@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "gleamcraft:glimmerstone_crystal_block",
+    "gleamcraft:glimmerstone_ore",
+    "gleamcraft:deepslate_glimmerstone_ore",
+    "gleamcraft:glimmerstone"
+  ]
+}
