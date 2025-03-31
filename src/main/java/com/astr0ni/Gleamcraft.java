@@ -16,12 +16,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -42,8 +37,8 @@ public class Gleamcraft {
 
     // CUSTOM TOOL MECHANIC
     public interface SunRepairingItem {
-        // Default method that can be used by all implementing classes
-        Map<UUID, BlockPos> PLAYER_LIGHTS = new HashMap<>();
+        // Map to track lights placed by each item in player inventory
+        Map<UUID, Map<ItemStack, BlockPos>> PLAYER_ITEM_LIGHTS = new HashMap<>();
         default boolean isPlayerInSunlight(Player player) {
             Level level = player.level();
             BlockPos pos = player.blockPosition();
@@ -98,9 +93,11 @@ public class Gleamcraft {
             // Check if player is holding this item in either hand
             boolean isHoldingItem = player.getMainHandItem() == stack || player.getOffhandItem() == stack;
 
+            Map<ItemStack, BlockPos> itemLights = PLAYER_ITEM_LIGHTS.computeIfAbsent(playerId, k -> new HashMap<>());
+
             if (isHoldingItem) {
                 // Only place light if there isn't one already or the player moved
-                BlockPos oldPos = PLAYER_LIGHTS.get(playerId);
+                BlockPos oldPos = itemLights.get(stack);
                 if (oldPos == null || !oldPos.equals(playerPos)) {
                     // Remove old light if exists
                     if (oldPos != null) {
@@ -111,14 +108,19 @@ public class Gleamcraft {
                     BlockState currentState = level.getBlockState(playerPos);
                     if (currentState.isAir() || currentState.canBeReplaced()) {
                         placeLight(level, playerPos);
-                        PLAYER_LIGHTS.put(playerId, playerPos);
+                        itemLights.put(stack, playerPos);
                     }
                 }
             } else {
                 // Remove light if player is no longer holding the item
-                BlockPos oldPos = PLAYER_LIGHTS.remove(playerId);
+                BlockPos oldPos = itemLights.remove(stack);
                 if (oldPos != null) {
                     removeLight(level, oldPos);
+                }
+
+                // Clean up player entry if no more lights are present
+                if (itemLights.isEmpty()) {
+                    PLAYER_ITEM_LIGHTS.remove(playerId);
                 }
             }
         }
