@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "gleamcraft:block/reactive_glimmerstone_crystal_block" }
+  }
+}

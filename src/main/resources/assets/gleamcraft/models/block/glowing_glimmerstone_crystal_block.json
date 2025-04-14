@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "gleamcraft:block/glowing_glimmerstone_crystal_block"
+  }
+}

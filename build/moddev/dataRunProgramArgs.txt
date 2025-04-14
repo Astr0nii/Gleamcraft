@@ -1,0 +1,29 @@
+# Main Class
+cpw.mods.bootstraplauncher.BootstrapLauncher
+
+# NeoForge Run-Type Program Arguments
+--launchTarget
+neoforgeclientdatadev
+--assetIndex
+19
+--assetsDir
+C:\\Users\\jeh12\\.gradle\\caches\\neoformruntime\\assets
+--gameDir
+.
+--fml.fmlVersion
+6.0.11
+--fml.mcVersion
+1.21.4
+--fml.neoForgeVersion
+21.4.123
+--fml.neoFormVersion
+20241203.161809
+
+# User Supplied Program Arguments
+--mod
+gleamcraft
+--all
+--output
+C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\Gleamcraft\\src\\generated\\resources
+--existing
+C:\\Users\\jeh12\\Desktop\\Computer\\Mods\\Minecraft\\Gleamcraft\\src\\main\\resources

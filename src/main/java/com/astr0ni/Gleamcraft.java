@@ -10,6 +10,7 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -216,9 +217,6 @@ public class Gleamcraft {
 
 
     // TAGS
-    // This tag will allow us to add these blocks to the incorrect tags that cannot mine them
-    public static final TagKey<Block> NEEDS_GLIMMERSTONE_TOOL = TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "needs_glimmerstone_tool"));
-
     // This tag will be passed into our material
     public static final TagKey<Block> INCORRECT_FOR_GLIMMERSTONE_TOOL = TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "incorrect_for_glimmerstone_tool"));
     // Glimmerstone Crystal
@@ -240,7 +238,6 @@ public class Gleamcraft {
             // The tag that determines what items can repair this material.
             GLIMMERSTONE_CRYSTALS
     );
-
 
     // BLOCKS
 
@@ -268,12 +265,13 @@ public class Gleamcraft {
                     .sound(SoundType.DEEPSLATE)
                     .lightLevel(state -> 3)
             ));
-    // BlockItem for Glimmerstone Ore
+    // Glimmerstone Ore
     public static final DeferredItem<BlockItem> DEEPSLATE_GLIMMERSTONE_ORE_ITEM = ITEMS.registerSimpleBlockItem("deepslate_glimmerstone_ore", DEEPSLATE_GLIMMERSTONE_ORE);
 
+    // Glimmerstone Crystal Block
     public static final DeferredBlock<Block> GLIMMERSTONE_CRYSTAL_BLOCK = BLOCKS.register(
             "glimmerstone_crystal_block",
-            registryName -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of()
+            registryName -> new Block(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(2f, 6.5f)
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)
@@ -284,10 +282,51 @@ public class Gleamcraft {
     // BlockItem for Glimmerstone Crystal Block
     public static final DeferredItem<BlockItem> GLIMMERSTONE_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("glimmerstone_crystal_block", GLIMMERSTONE_CRYSTAL_BLOCK);
 
-    // BlockItem for Glimmerstone
+    // Glowing Glimmerstone Crystal Block
+    public static final DeferredBlock<Block> GLOWING_GLIMMERSTONE_CRYSTAL_BLOCK = BLOCKS.register(
+            "glowing_glimmerstone_crystal_block",
+            registryName -> new Block(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(1.8f, 6.25f)
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.AMETHYST)
+                    .lightLevel(state -> 12)
+            ));
+    // BlockItem for Glowing Glimmerstone Crystal Block
+    public static final DeferredItem<BlockItem> GLOWING_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("glowing_glimmerstone_crystal_block", GLOWING_GLIMMERSTONE_CRYSTAL_BLOCK);
+
+    // Reactive Glimmerstone Crystal Block
+    public static final DeferredBlock<Block> REACTIVE_GLIMMERSTONE_CRYSTAL_BLOCK = BLOCKS.register(
+            "reactive_glimmerstone_crystal_block",
+            registryName -> new Block(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(2.75f, 6.8f)
+                    .mapColor(MapColor.COLOR_RED)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.AMETHYST)
+                    .lightLevel(state -> 8)
+            ));
+    // BlockItem for Reactive Glimmerstone Crystal Block
+    public static final DeferredItem<BlockItem> REACTIVE_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("reactive_glimmerstone_crystal_block", REACTIVE_GLIMMERSTONE_CRYSTAL_BLOCK);
+
+    // Reinforced Glimmerstone Crystal Block
+    public static final DeferredBlock<Block> REINFORCED_GLIMMERSTONE_CRYSTAL_BLOCK = BLOCKS.register(
+            "reinforced_glimmerstone_crystal_block",
+            registryName -> new Block(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .strength(4f, 9.5f)
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.AMETHYST)
+                    .lightLevel(state -> 5)
+            ));
+    // BlockItem for Reactive Glimmerstone Crystal Block
+    public static final DeferredItem<BlockItem> REINFORCED_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("reinforced_glimmerstone_crystal_block", REINFORCED_GLIMMERSTONE_CRYSTAL_BLOCK);
+    // Glimmerstone
     public static final DeferredBlock<Block> GLIMMERSTONE = BLOCKS.register(
             "glimmerstone",
-            registryName -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of()
+            registryName -> new Block(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
                     .strength(1.25f, 1.25f)
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)
@@ -295,7 +334,7 @@ public class Gleamcraft {
                     .sound(SoundType.CALCITE)
                     .lightLevel(state -> 4)
             ));
-    // BlockItem for Glimmerstone BlockItem
+    // BlockItem for Glimmerstone
     public static final DeferredItem<BlockItem> GLIMMERSTONE_ITEM = ITEMS.registerSimpleBlockItem("glimmerstone", GLIMMERSTONE);
 
 
@@ -369,6 +408,9 @@ public class Gleamcraft {
                 output.accept(GLIMMERSTONE_ORE_ITEM.get()); // Add the glimmerstone ore to our tab
                 output.accept(DEEPSLATE_GLIMMERSTONE_ORE_ITEM.get()); // Add the deepslate glimmerstone ore to our tab
                 output.accept(GLIMMERSTONE_CRYSTAL_BLOCK_ITEM.get()); // Add the glimmerstone crystal block to our tab
+                output.accept(GLOWING_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM.get()); // Add the glowing glimmerstone crystal block to our tab
+                output.accept(REACTIVE_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM.get()); // Add the reactive glimmerstone crystal block to our tab
+                output.accept(REINFORCED_GLIMMERSTONE_CRYSTAL_BLOCK_ITEM.get()); // Add the reinforced glimmerstone crystal block to our tab
                 output.accept(GLIMMERSTONE_SWORD.get()); // Add the glimmerstone crystal sword to our tab
                 output.accept(GLIMMERSTONE_PICKAXE.get()); // Add the glimmerstone crystal pickaxe to our tab
                 output.accept(GLIMMERSTONE_AXE.get()); // Add the glimmerstone crystal axe to our tab
