@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "render_type": "cutout",
+  "textures": {
+    "layer0": "gleamcraft:item/glimmerstone_axe"
+  }
+}

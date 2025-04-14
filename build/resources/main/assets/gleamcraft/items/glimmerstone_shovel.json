@@ -1,6 +1,16 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "gleamcraft:item/glimmerstone_shovel"
+    "type": "minecraft:composite",
+
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "gleamcraft:item/glimmerstone_shovel_base"
+      },
+      {
+        "type": "minecraft:model",
+        "model": "gleamcraft:item/glimmerstone_shovel_glow"
+      }
+    ]
   }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": "gleamcraft:glowing_glimmerstone_crystal",
+    "#": "minecraft:stone"
+  },
+  "pattern": [
+    "#X",
+    "X#"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:glowstone"
+  }
+}
