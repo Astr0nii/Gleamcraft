@@ -5,7 +5,7 @@ cpw.mods.bootstraplauncher.BootstrapLauncher
 --launchTarget
 neoforgeclientdev
 --version
-21.4.123
+21.5.123
 --assetIndex
 19
 --assetsDir

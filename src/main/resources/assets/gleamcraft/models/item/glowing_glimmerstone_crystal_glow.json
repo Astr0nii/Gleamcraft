@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gleamcraft:item/glowing_glimmerstone_crystal_glow"
+  }
+}

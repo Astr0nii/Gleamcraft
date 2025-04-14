@@ -1,5 +1,14 @@
 package com.astr0ni;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -10,14 +19,17 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -29,6 +41,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.Map;
+
 
 @Mod(Gleamcraft.MOD_ID)
 public class Gleamcraft {
@@ -141,7 +154,7 @@ public class Gleamcraft {
         }
     }
 
-    // Custom sword class
+    // Glimmerstone Sword
     public static class GlimmerstoneSwordItem extends SwordItem implements SunRepairingItem {
         public GlimmerstoneSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Properties properties) {
             super(toolMaterial, attackDamage, attackSpeed, properties);
@@ -155,7 +168,7 @@ public class Gleamcraft {
         }
     }
 
-    // Custom axe class
+    // Glimmerstone Axe
     public static class GlimmerstoneAxeItem extends AxeItem implements SunRepairingItem {
         public GlimmerstoneAxeItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Properties properties) {
             super(toolMaterial, attackDamage, attackSpeed, properties);
@@ -169,7 +182,7 @@ public class Gleamcraft {
         }
     }
 
-    // Custom pickaxe class
+    // Glimmerstone Pickaxe
     public static class GlimmerstonePickaxeItem extends PickaxeItem implements SunRepairingItem {
         public GlimmerstonePickaxeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Properties properties) {
             super(toolMaterial, attackDamage, attackSpeed, properties);
@@ -221,7 +234,6 @@ public class Gleamcraft {
     public static final TagKey<Block> INCORRECT_FOR_GLIMMERSTONE_TOOL = TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "incorrect_for_glimmerstone_tool"));
     // Glimmerstone Crystal
     public static final TagKey<Item> GLIMMERSTONE_CRYSTALS = TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "glimmerstone_crystal"));
-
 
     // TOOL MATERIAL
     public static final ToolMaterial GLIMMERSTONE_MATERIAL = new ToolMaterial(
@@ -347,17 +359,20 @@ public class Gleamcraft {
     public static final DeferredItem<Item> REACTIVE_GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("reactive_glimmerstone_crystal");
     // Reinforced Glimmerstone crystal
     public static final DeferredItem<Item> REINFORCED_GLIMMERSTONE_CRYSTAL = ITEMS.registerSimpleItem("reinforced_glimmerstone_crystal");
+    // Glimmering tears
+    public static final DeferredItem<Item> GLIMMERING_TEARS = ITEMS.registerSimpleItem("glimmering_tears");
     // Glimmerstone tools
-    public static final DeferredItem<SwordItem> GLIMMERSTONE_SWORD = ITEMS.registerItem(
+    public static final DeferredItem<Item> GLIMMERSTONE_SWORD = ITEMS.registerItem(
             "glimmerstone_sword",
             props -> new GlimmerstoneSwordItem(
                     GLIMMERSTONE_MATERIAL,
                     3,
                     -2.4f,
                     props
+
             )
     );
-    public static final DeferredItem<AxeItem> GLIMMERSTONE_AXE = ITEMS.registerItem(
+    public static final DeferredItem<Item> GLIMMERSTONE_AXE = ITEMS.registerItem(
             "glimmerstone_axe",
             props -> new GlimmerstoneAxeItem(
                     GLIMMERSTONE_MATERIAL,
@@ -366,7 +381,7 @@ public class Gleamcraft {
                     props
             )
     );
-    public static final DeferredItem<PickaxeItem> GLIMMERSTONE_PICKAXE = ITEMS.registerItem(
+    public static final DeferredItem<Item> GLIMMERSTONE_PICKAXE = ITEMS.registerItem(
             "glimmerstone_pickaxe",
             props -> new GlimmerstonePickaxeItem(
                     GLIMMERSTONE_MATERIAL,
@@ -375,7 +390,7 @@ public class Gleamcraft {
                     props
             )
     );
-    public static final DeferredItem<ShovelItem> GLIMMERSTONE_SHOVEL = ITEMS.registerItem(
+    public static final DeferredItem<Item> GLIMMERSTONE_SHOVEL = ITEMS.registerItem(
             "glimmerstone_shovel",
             props -> new GlimmerstoneShovelItem(
                     GLIMMERSTONE_MATERIAL,
@@ -384,16 +399,15 @@ public class Gleamcraft {
                     props
             )
     );
-    public static final DeferredItem<HoeItem> GLIMMERSTONE_HOE = ITEMS.registerItem(
+    public static final DeferredItem<Item> GLIMMERSTONE_HOE = ITEMS.registerItem(
             "glimmerstone_hoe",
             props -> new GlimmerstoneHoeItem(
                     GLIMMERSTONE_MATERIAL,
-                    -3f,
+                    -2.25f,
                     0f,
                     props
             )
     );
-
 
     // CREATIVE MODE TAB
     public static final Supplier<CreativeModeTab> GLEAMCRAFT_TAB = CREATIVE_MODE_TABS.register("gleamcraft_tab", () -> CreativeModeTab.builder()
@@ -416,8 +430,10 @@ public class Gleamcraft {
                 output.accept(GLIMMERSTONE_AXE.get()); // Add the glimmerstone crystal axe to our tab
                 output.accept(GLIMMERSTONE_SHOVEL.get()); // Add the glimmerstone crystal shovel to our tab
                 output.accept(GLIMMERSTONE_HOE.get()); // Add the glimmerstone crystal hoe to our tab
+                output.accept(GLIMMERING_TEARS.get()); // Add the glimmering tears to our tab
             })
             .build());
+
 
     public Gleamcraft(IEventBus modEventBus) {
 
@@ -425,7 +441,6 @@ public class Gleamcraft {
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
     }
-
 
     public static ResourceLocation modLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);

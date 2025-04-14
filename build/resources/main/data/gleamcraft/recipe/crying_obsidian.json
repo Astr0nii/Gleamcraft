@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": "gleamcraft:glimmering_tears",
+    "#": "minecraft:obsidian"
+  },
+  "pattern": [
+    "#X",
+    "X#"
+  ],
+  "result": {
+    "count": 2,
+    "id": "minecraft:crying_obsidian"
+  }
+}
